@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block starts %}
+
+<div class="container mt-5">
+    <form class="col-6 mx-auto card p-2 shadow-lg" method="post">
+        {% csrf_token %}
+            <h2>Adding Places</h2>
+
+  <div class="mb-3 ">
+    <label for="name" class="form-label">Name</label>
+    <input type="text" name="name" class="form-control" id="name">
+  </div>
+        <div class="mb-3">
+    <label for="location" class="form-label">Location</label>
+    <input type="text" name="location" class="form-control" id="location" >
+  </div>
+        <div class="mb-3">
+    <label for="description" class="form-label">Description</label>
+            <textarea class="form-control" name="description" id="description"></textarea>
+  </div>
+         <div class="mb-3">
+    <label for="keywords" class="form-label">Keywords</label>
+            <textarea class="form-control" name="keywords" id="keywords"></textarea>
+  </div>
+        <div class="mb-3">
+    <label for="image" class="form-label">ImageUrl</label>
+    <input type="text" class="form-control" name="image" id="image">
+  </div>
+
+
+  <button type="submit" class="btn btn-success">Add Places</button>
+</form>
+     <!--   <div class="container d-inline ">
+
+    {% for destination in destinations %}
+
+    <div class="card">
+        <img class="card-img-top" src={{destination.image}} alt="Card image cap">
+        <div class="card-body">
+            <h5 class="card-title">{{destination.name}}</h5>
+            <p class="card-text">{{destination.description}}</p>
+<div class="d-flex justify-content-between">
+            <a href="/update-destination/{{destination.id}}" class="btn btn-primary">Edit</a>
+            <a href="/delete-destination/{{destination.id}}" class="btn btn-danger">Delete</a>
+            </div>
+
+
+        </div>
+    </div>
+    {% endfor %}
+    </div>-->
+</div>
+
+{% endblock %}

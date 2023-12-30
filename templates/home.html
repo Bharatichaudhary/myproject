@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% block starts %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<form class="form-inline my-2 d-flex w-5">
+    <input class="form-control mr-sm-2" name="search" placeholder="Search" aria-label="Search">
+    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+
+    {% if user.is_authenticated %}
+        <!-- Show logout button if the user is logged in -->
+        <a href="{% url 'logout' %}" class="btn btn-outline-danger my-2 my-sm-0">Logout</a>
+    {% else %}
+        <!-- Show login button if the user is not logged in -->
+        <a href="{% url 'login' %}" class="btn btn-outline-primary my-2 my-sm-0">Login</a>
+    {% endif %}
+</form>
+
+<div class="container d-inline ">
+    {% for destination in destinations %}
+        <div class="card">
+            <img class="card-img-top" src="{{ destination.image }}" alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title">{{ destination.name }}</h5>
+                <p class="card-text">{{ destination.description }}</p>
+                <p>Count of Ratings: {{ destination.count_ratings }}</p>
+                <p>Average Rating: {{ destination.average_rating }}</p>
+<div class="rating-stars">
+    {% for i in "12345" %}
+        {% with i_int=i|add:0 %}
+            {% with half_star_limit=i_int|add:-0.5 %}
+                {% if i_int <= destination.average_rating %}
+                    <i class="bi bi-star-fill"></i>
+
+                {% elif half_star_limit <= destination.average_rating %}
+                    <i class="bi bi-star-half"></i>
+                {% else %}
+                    <i class="bi bi-star"></i>
+                {% endif %}
+            {% endwith %}
+        {% endwith %}
+    {% endfor %}
+</div>
+
+
+
+
+                <div class="d-flex justify-content-between">
+                    {% if user.is_superuser %}
+                        <a href="/update-destination/{{ destination.id }}" class="btn btn-primary">Edit</a>
+                        <a href="/delete-destination/{{ destination.id }}" class="btn btn-danger">Delete</a>
+                    {% elif user.is_authenticated %}
+                        {% if not already_rated %}
+                            <a href="{% url 'rate_destination' destination.id %}" class="btn btn-primary">Rate</a>
+                        {% else %}
+                            <button class="btn btn-primary" disabled>Already Rated</button>
+
+                        {% endif %}
+                    {% else %}
+                        <a href="/login" class="btn btn-primary">Rate</a>
+                    {% endif %}
+                            <a href="{% url 'get_details' destination.id %}" class="btn btn-primary">More</a>
+
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+{% endblock %}

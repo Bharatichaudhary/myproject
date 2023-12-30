@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block starts %}
+
+<div class="container mt-5">
+    <form class="col-6 mx-auto card p-2 shadow-lg" method="post" action="{% url 'update_destination' id=destinations.id %}">
+        {% csrf_token %}
+        <h2>Updating Places</h2>
+
+        <div class="mb-3">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" name="name" value="{{ destinations.name }}" class="form-control" id="name">
+        </div>
+        <div class="mb-3">
+            <label for="location" class="form-label">Location</label>
+            <input type="text" name="location" value="{{ destinations.location }}" class="form-control" id="location">
+        </div>
+        <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <textarea class="form-control" name="description" id="description">{{ destinations.description }}</textarea>
+        </div>
+         <div class="mb-3">
+            <label for="keywords" class="form-label">Keywords</label>
+            <textarea class="form-control" name="keywords" id="keywords">{{destinations.keywords}}</textarea>
+         </div>
+        <div class="mb-3">
+            <label for="image" class="form-label">ImageUrl</label>
+            <input type="text" class="form-control" value="{{ destinations.image }}" name="image" id="image">
+        </div>
+        <button type="submit" class="btn btn-success">Update Place</button>
+    </form>
+</div>
+
+{% endblock %}
